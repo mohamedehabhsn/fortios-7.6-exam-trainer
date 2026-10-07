@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FortiOS 7.6 Exam Trainer - 101 Questions</title>
+  <meta name="description" content="Offline FortiOS 7.6 exam trainer with 101 questions, exhibits, shuffled answers, multi-answer support and scoring.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">FGT</div>
+        <div>
+          <div class="brand-title">FortiOS 7.6 Exam Trainer</div>
+          <div class="brand-subtitle">101 questions · Offline practice · Exhibits included</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="save-pill" id="saveState">Ready</div>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme">☾</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-card exam-summary">
+          <div class="label">TEST PROGRESS</div>
+          <div class="progress-row">
+            <strong id="progressText">0 / 101</strong>
+            <span id="scoreText">Score 0</span>
+          </div>
+          <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+          <div class="mini-stats">
+            <div><span id="correctCount">0</span><small>Correct</small></div>
+            <div><span id="wrongCount">0</span><small>Wrong</small></div>
+            <div><span id="unansweredCount">101</span><small>Open</small></div>
+          </div>
+        </div>
+
+        <div class="sidebar-card controls-card">
+          <div class="label">QUESTION NAVIGATION</div>
+          <input id="questionSearch" class="search" type="search" placeholder="Search question number or text..." autocomplete="off">
+          <select id="questionSelect" class="select" aria-label="Jump to question"></select>
+          <div class="toggle-line">
+            <label class="switch-label"><input id="shuffleQuestions" type="checkbox" checked><span class="switch"></span>Shuffle questions</label>
+          </div>
+          <div class="toggle-line">
+            <label class="switch-label"><input id="shuffleAnswers" type="checkbox" checked><span class="switch"></span>Shuffle answers</label>
+          </div>
+          <button id="resetBtn" class="secondary-btn" type="button">Reset / new test</button>
+        </div>
+
+        <div class="sidebar-card palette-card">
+          <div class="palette-head">
+            <div class="label">ALL QUESTIONS</div>
+            <span id="paletteCount">101</span>
+          </div>
+          <div id="questionGrid" class="question-grid"></div>
+        </div>
+      </aside>
+
+      <section class="content">
+        <div id="quizView">
+          <div class="question-header">
+            <div>
+              <div class="eyebrow" id="positionLabel">QUESTION 1 OF 101</div>
+              <h1 id="questionTitle">Question #1</h1>
+            </div>
+            <div class="question-actions">
+              <button id="prevBtn" class="nav-btn" type="button">← Previous</button>
+              <button id="nextBtn" class="nav-btn primary-nav" type="button">Next →</button>
+            </div>
+          </div>
+
+          <div class="question-card">
+            <div class="question-meta">
+              <span id="typeBadge" class="badge">Single answer</span>
+              <span id="selectHint" class="hint">Select one answer</span>
+            </div>
+            <div id="exhibitWrap" class="exhibit-wrap hidden">
+              <div class="exhibit-head"><span class="badge exhibit-badge">Exhibit</span><button id="exhibitZoom" class="text-btn" type="button">Open larger</button></div>
+              <button id="exhibitButton" class="exhibit-frame" type="button" aria-label="Open exhibit image">
+                <img id="exhibitImage" class="exhibit-image" alt="Question exhibit">
+              </button>
+              <div class="exhibit-note">This image is the exhibit associated with the question in the supplied PDF.</div>
+            </div>
+            <div id="questionPrompt" class="question-prompt"></div>
+            <div id="options" class="options"></div>
+
+            <div class="selection-row">
+              <div id="selectionStatus" class="selection-status">No answer selected.</div>
+              <button id="clearBtn" class="text-btn" type="button">Clear selection</button>
+            </div>
+
+            <div class="submit-row">
+              <button id="submitBtn" class="submit-btn" type="button" disabled>Submit answer</button>
+              <button id="finishBtn" class="finish-btn" type="button">Finish test</button>
+            </div>
+
+            <div id="feedback" class="feedback hidden"></div>
+          </div>
+
+          <div class="footer-nav">
+            <button id="prevBtn2" class="nav-btn" type="button">← Previous</button>
+            <div class="center-help">Answers are not revealed until you press <strong>Submit answer</strong>.</div>
+            <button id="nextBtn2" class="nav-btn primary-nav" type="button">Next →</button>
+          </div>
+        </div>
+
+        <div id="resultsView" class="results-view hidden">
+          <div class="results-card">
+            <div class="eyebrow">TEST COMPLETE</div>
+            <h2 id="resultsTitle">Your result</h2>
+            <div class="score-hero"><div id="finalScore">0%</div><span>final score</span></div>
+            <div class="results-grid">
+              <div><strong id="finalCorrect">0</strong><span>Correct</span></div>
+              <div><strong id="finalWrong">0</strong><span>Wrong</span></div>
+              <div><strong id="finalOpen">0</strong><span>Unanswered</span></div>
+            </div>
+            <div id="reviewSummary" class="review-summary"></div>
+            <div class="result-actions">
+              <button id="reviewWrongBtn" class="submit-btn" type="button">Review wrong / open</button>
+              <button id="backToTestBtn" class="secondary-btn" type="button">Back to test</button>
+              <button id="newTestBtn" class="finish-btn" type="button">New test</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="exhibitModal" class="exhibit-modal hidden" role="dialog" aria-modal="true" aria-label="Exhibit preview">
+    <div class="exhibit-modal-backdrop" id="exhibitModalBackdrop"></div>
+    <div class="exhibit-modal-card">
+      <button id="exhibitModalClose" class="exhibit-modal-close" type="button" aria-label="Close exhibit">×</button>
+      <img id="exhibitModalImage" class="exhibit-modal-image" alt="Exhibit enlarged">
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
